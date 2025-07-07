@@ -18,4 +18,5 @@ public class RabbitMQConfig {
     public Queue ColaNotificacionGlobal () {
         return QueueBuilder.durable("notificacionesGlobal.cola").build();
     }
+
 }
