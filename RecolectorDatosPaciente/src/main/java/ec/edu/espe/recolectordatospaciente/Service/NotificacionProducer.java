@@ -16,13 +16,13 @@ public class NotificacionProducer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private static final String COLA_SIGNOS_VITALES = "signosvitales.cola";
+    private static final String COLA_NOTIFICACIONES = "NewVitalSignEvent.cola";
 
-    public void enviarNotificacion(NotificacionesDTO notificacion) {
+    public void enviarSignoVital(NotificacionesDTO notificacion) {
         try {
             String json = objectMapper.writeValueAsString(notificacion);
             log.info("enviando notificacion: {}", json);
-            rabbitTemplate.convertAndSend(COLA_SIGNOS_VITALES, json);
+            rabbitTemplate.convertAndSend(COLA_NOTIFICACIONES, json);
         } catch (Exception e) {
             e.printStackTrace();
         }

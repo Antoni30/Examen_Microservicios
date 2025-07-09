@@ -1,14 +1,13 @@
 package ec.edu.espe.msnotificaciones.service;
 
 import ec.edu.espe.msnotificaciones.DTO.NotificacionGeneralDTO;
-import ec.edu.espe.msnotificaciones.DTO.NotificacionesDTO;
-import ec.edu.espe.msnotificaciones.entity.Notificacion;
 import ec.edu.espe.msnotificaciones.entity.NotificacionGeneral;
 import ec.edu.espe.msnotificaciones.repository.NotificacionGeneralRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NotificacionesGeneralService {
@@ -17,6 +16,9 @@ public class NotificacionesGeneralService {
 
      public List<NotificacionGeneral> findAll(){
          return notificacionGeneralRepository.findAll();
+     }
+     public Optional<NotificacionGeneral> findById(String id){
+         return notificacionGeneralRepository.findById(id);
      }
 
     public NotificacionGeneral guardarNotificacion(NotificacionGeneralDTO notificacionesDTO){

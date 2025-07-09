@@ -11,12 +11,29 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue ColaNotificacion () {
-        return QueueBuilder.durable("notificaciones.cola").build();
+        return QueueBuilder.durable("NewVitalSignEvent.cola").build();
     }
 
     @Bean
     public Queue ColaNotificacionGlobal () {
-        return QueueBuilder.durable("notificacionesGlobal.cola").build();
+        return QueueBuilder.durable("notificacionesGlobal.cola")
+                .withArgument("x-max-priority", 10)
+                .build();
     }
+
+    @Bean
+    public Queue colaMSAnalisis() {
+        return new Queue("cola_microservicio");
+    }
+
+    @Bean
+    public Queue delayQueue() {
+        return QueueBuilder.durable("cola_delay_prioridad_10")
+                .withArgument("x-dead-letter-exchange", "")  // default exchange
+                .withArgument("x-dead-letter-routing-key", "notificacionesGlobal.cola")
+                .withArgument("x-message-ttl", 60000) // 1 minutos en milisegundos
+                .build();
+    }
+
 
 }

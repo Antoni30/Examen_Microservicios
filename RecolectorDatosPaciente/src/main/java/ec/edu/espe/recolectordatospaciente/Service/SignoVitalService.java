@@ -13,6 +13,8 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 import         ec.edu.espe.recolectordatospaciente.model.SignoVital;
+import org.springframework.web.bind.annotation.PathVariable;
+
 @Service
 @Transactional
 public class SignoVitalService {
@@ -25,6 +27,7 @@ public class SignoVitalService {
 
     @Autowired
     private NotificacionProducer notificacionProducer;
+
 
     public ec.edu.espe.recolectordatospaciente.model.SignoVital crearSignoVital(SignoVitalDTO dto) {
         DispositivoMedico dispositivo = dispositivoMedicoRepository.findById(dto.getIdDispositivo())
@@ -41,7 +44,12 @@ public class SignoVitalService {
 
         enviarNotificacion(guardado);
 
+
         return guardado;
+    }
+
+    public SignoVital findSignoVitalById(@PathVariable UUID id) {
+        return signoVitalRepository.findById(id).orElse(null);
     }
 
     public SignoVital actualizarSignoVital(UUID idSigno, SignoVitalDTO dto) {
@@ -86,6 +94,6 @@ public class SignoVitalService {
                 signo.getValor().intValue()
         );
 
-        notificacionProducer.enviarNotificacion(notificacion);
+        notificacionProducer.enviarSignoVital(notificacion);
     }
 }
